@@ -1,0 +1,72 @@
+1. Ergonomics, Wearability, and Thermal/Slippage Constraints
+These papers investigate why lightweight, well-balanced physical designs are mandatory for head-worn devices. They provide excellent justification for your decision to offload the heavy components (battery and CPU) into a separate waist/pocket unit.
+
+"Effects of the Weight and Balance of Head-Mounted Displays on Physical Load"
+Link: https://www.mdpi.com/2076-3417/11/15/6802#:~:text=Afterwards%2C%20the%20participants%20completed%20questionnaires,of%20weight%20during%20HMD%20design
+
+"The impact of slippage on the data quality of head-worn eye trackers"
+Authors: Niehorster, D. C., et al. (2020)
+Context: A seminal paper describing how even minor shifts in head-unit weight distribution (often caused by speaking or head movements) create "slippage" that completely ruins angular calibration over time. It compares various setups like Tobii and Pupil Labs.
+Link / Access: 10.3758/s13428-019-01307-0 (Open Access PDF usually available on Springer).
+https://link.springer.com/article/10.3758/s13428-019-01307-0#:~:text=used%3A%20,accuracy%20is%20required%2C%20such%20as
+
+"Slippage-robust Gaze Tracking for Near-eye Display"
+Authors: Li, J., et al. (2020)
+Context: Introduces technical and physical methods to compensate for slippage by using geometric eyeball modeling when the heavy glasses shift on the inspector's face.
+Link / Access: Available via IEEE Xplore or ResearchGate.
+
+
+
+2. Embedded Systems & Edge Processing Pipelines
+These academic papers focus on the software/hardware co-design necessary to fetch frames from cameras, process them in real-time, and manage power footprints on embedded SoCs.
+
+Combining EEG and eye tracking:
+a workflow for your mobile experiment
+Link: https://pressrelease.brainproducts.com/eeg-eyetracking-mobile/
+
+"An Embedded and Real-Time Pupil Detection Pipeline"
+Authors: Ankur Raj, Diwas Bhattarai, and Kristof Van Laerhoven (2023)
+Context: Demonstrates deploying lightweight models and pipelines on resource-constrained embedded targets. Highlights the limits of edge devices while pushing 30Hz+ frame-rate processing.
+Link / Access: arXiv:2302.14098 (Free PDF directly on arXiv).
+
+
+"PuRe: Robust pupil detection for real-time pervasive eye tracking"
+Authors: Santini, T., Fuhl, W., & Kasneci, E. (2018)
+Context: Offers core technical strategies regarding how raw camera signals are efficiently captured and segmented in real-time, focusing heavily on standard C++ implementations rather than heavy deep-learning frameworks (justifying your baseline CV approaches).
+Link / Access: Available via ScienceDirect / ResearchGate.
+
+
+"OpenEyes: A low-cost head-mounted eye-tracking solution"
+Authors: Li, D., Babcock, J., & Parkhurst, D. J. (2006)
+Context: While older, this is heavily referenced. It outlines the foundational architecture of decoupling the capture unit (USB cameras) from the computing hardware processing the algorithms.
+Link / Access: Searchable via Google Scholar (often freely hosted PDF).
+
+
+3. Commercial Architecture Specifications (Industry Reference)
+It is highly recommended to reference how multi-million dollar eye-tracking companies solve the same problems your team is facing.
+
+Tobii Pro Glasses 3 Product Specifications / Whitepapers
+Architecture Detail: Tobii strictly utilizes a distributed physical architecture. The head unit (containing 4 eye cameras, IR LEDs, and 1 Scene camera) weighs just 76.5 grams. All recording, battery supply (18650 Li-ion), and processing happen on a standalone 312-gram Recording Unit tethered via cable.
+Why you should cite it: argument for creating a separate case system with an embedded processor and a 5-6 hour battery, rather than shoving everything onto the user's face.
+Link / Access: Tobii Pro Glasses 3 Official Site (Specification brochures available directly on the page).
+
+
+Pupil Labs "Invisible"
+Architecture Detail: Rather than building a custom embedded recorder like Tobii, Pupil Labs relies completely on an Android Companion Device (such as a tethered OnePlus smartphone) for edge computation. The glasses are merely dumb USB-C sensor hubs, while the phone handles the Deep Learning algorithm processing.
+Why you should cite it: Demonstrates that even the most modern CV/Deep Learning eye-tracking products require external edge processing devices due to thermal and battery efficiency limits.
+Link / Access: Pupil Invisible Whitepaper (Accessible natively via their website).
+
+
+How to best utilize these in your presentation: When discussing your specific hardware choices, cite Niehorster (2020) to prove why having a lightweight frame avoids calibration slippage. Afterwards, use Tobii Pro Glasses 3 and Pupil Invisible as "Industry validation" for why your team chose to tether lightweight USB cameras to an external embedded case. Both are standard, indisputable defenses for your design architecture!
+
+
+
+Handling Synchronization & Timestamping Jitter (Your Function F3)
+When running two USB cameras via V4L2 on Linux, the biggest killer of data quality is OS Jitter (software timestamps fluctuating by 3-15ms under CPU load).
+
+Research Paper: "Eye-Tracking System with Low-End Hardware: Development and Evaluation" (MDPI / Sensors)
+Relevance: Compares low-cost setups to high-end hardware. Focuses on the limitations of software timestamping (like your CLOCK_MONOTONIC logic) versus hardware triggering, and how timestamp drift impacts saccade calculations.
+Access: Open Access on MDPI Sensors. Search title directly via Google Scholar.
+
+How to synchronize two USB cameras to use them as Stereo Camera?
+Link: https://stackoverflow.com/questions/21671139/how-to-synchronize-two-usb-cameras-to-use-them-as-stereo-camera#:~:text=Problem%202%3A%20I%20still%20measured,least%20in%20my%20OpenCV%20version

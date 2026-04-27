@@ -1,0 +1,57 @@
+There are total 5 components of my project
+I need to focus on this:
+Component 2: Embedded System & Data Capture Pipeline 
+
+Focus: Reliable signal acquisition
+
+This includes: 
+* Interfacing with the camera module
+* Managing frame rate and resolution
+* Buffering and timestamping data
+* Offline storage or local transfer
+* Bluetooth or wired data export
+* Handling synchronization between eye video and system clock
+
+Deliverables: 
+* Working data capture pipeline
+* Documented data format
+* Latency and stability analysis
+* Contribution to research on sampling rate vs performance
+
+This role requires: 
+* hardware-software interfacing
+* low-level programming
+* real-time constraints awareness
+
+primary focus being on camera data extraction pipeline
+
+head-mounted eye-tracking architectures, edge processing, hardware ergonomics, and slippage mitigation.
+
+The challenges — minimizing latency, combating OS jitter, synchronizing dual USB cameras, and managing thermal loads on edge devices—are heavily studied areas in ubiquitous computing and computer vision architectures.
+
+Here are the most relevant academic research areas and documentation tailored to my exact pipeline requirement
+
+We currently have a kexxu's prototype of cameras used in the glasses, it has 2 cameras, one for tracking eye gaze, and other for the front view
+they are usb-cameras
+we will have a case-system connected to these cameras
+the casing would involve our concerned embedded system or whatever, with a battery long enough to last atleast 5-6 hours
+eventually, I want to analyze al the basic hardware and embedded aspect IN DETAIL
+
+i want you to do the following:
+1) go through the following relevant research papers, documents wrt my embedded and hardware topic
+
+2) go through Presentation 'report progress.pdf' to look through the work done by other component members if you want to, I want to make relevant slides, related to our hardware aspect, which includes:
+our hardware choice wrt ergonomics
+our camera choices reasoning
+our embedded system design and requirements
+physical structure of our hardware
+everything relevant to component 2
+
+3) The resulting slides SHOULD EXPRESS that the research has been done thoroughly
+everything should be supported by a relevant reasoning
+
+I want you to combine the insights from these and make a PROPER, DETAILED slides, basically combining these different slides together. make detailed slides over WHAT make our project complicated and WHY, detailed, elaborated, diagrams if needed our evaluator thinks this project is too easy elaborate why the embedded part is complciated, what makes this complciated proper explanation of why it can take an year to fully achieve. generate detailed pptx file containin slides add diagrams where seems necessary
+make each and everything verifiable (dont just through shit randomly, everything should be supported wrt the research.
+convert into an actuall PPT downloadable slide.
+add exact diagrams and proper visuals for each slide.
+add defense questions + answers where seems useful

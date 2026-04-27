@@ -1,0 +1,38 @@
+Component 2: Hardware & Embedded System Design
+Toyota Eye Tracking Glasses - Component 2 Reliable Signal Acquisition & Data Capture Pipeline
+
+Slide 1: Hardware Ergonomics & Wearability Requirements
+The Challenge of Head-Mounted Eye-Tracking (HMET)
+Key Ergonomic Factor: Research shows device weight and thermal generation are the main drivers of user discomfort during extended monitoring (5-6 hours).
+The "Slippage" Problem: Heavy head units cause physical shifting during head movement. Even a 2-3mm slip invalidates the angular calibration.
+Industry Precedent: Market-leading products like Tobii Pro Glasses 3 (76.5g head unit, 312g external recorder) and Pupil Invisible separate the sensory hardware from the processing "brain."
+Our Decision: A Decoupled Physical Architecture. The eye-wear glasses will only house the lightweight USB cameras and IR illuminators. All processing and battery payloads are offloaded to a separate, waist-mounted or pocket-housed case system.
+Slide 2: Camera Choices & Sensor Architecture
+Reasoning for Using Kexxu's USB Prototype
+Dual Camera Architecture:
+Eye Camera: 1280×800 @ 60 FPS (MJPEG) - Provides the high temporal resolution needed to map rapid saccades and micro-saccades.
+Scene Camera: 1920×1080 @ 30 FPS (MJPEG) - Provides necessary scene context for Component 4's feature matching (ORB/Homography).
+Cost-Effective Scalability: UVC (USB Video Class) cameras are highly portable, require no custom MIPI/CSI kernel drivers, and work natively with Linux V4L2.
+Hardware-Level Compression: Capturing in native MJPEG passes the compression workload to the camera's internal hardware, saving immediate CPU overhead on the embedded SoC.
+Slide 3: Embedded System Hardware Structure
+Balancing Processing Power and Portability
+The Processing Core: A powerful embedded SoC (e.g., Jetson Orin Nano / Rockchip) is required to manage simultaneous dual-video streams and handle downstream synchronization.
+Thermal Constraints: Running a 60FPS + 30FPS stream continuously pushes CPUs to max load, raising temperatures. Our physical design isolates this heat to the external waist-case, far from the user's face.
+Power Design: To meet the 5-6 hour continuous operation requirement, the system relies on an external high-capacity Li-ion battery (similar to standard 18650 packs used in Tobii), ensuring the glasses remain unencumbered by heavy battery weight.
+Interfacing Structure: A rigid USB 3.0/Type-C cable loom connects the head-unit to the waist-case, ensuring high-bandwidth throughput without relying on power-hungry wireless streaming from the head.
+Slide 4: Embedded Software Architecture
+Concept C1 & C3: Edge Capture Integration
+The Baseline Approach: Derived from our Trade Studies, we start with a V4L2 Direct Device Access pipeline. It avoids the latency overhead of frameworks like GStreamer for our initial testing.
+Decoupled Operation: As evaluated in the Red Team critique, we utilize a Producer-Consumer ring buffer. The capture thread pulls frames directly from kernel memory (zero-copy DMA) into the buffer, while a separate thread writes to local storage (SSD/eMMC) in independent AVI containers.
+Network-Connected Edge Capture (Concept C3 Alignment): While our capture is offline/local, we prepare the pipeline to batch-upload data to the cloud for heavy analytics, completely protecting the embedded device from thermal throttling and thread starvation.
+Slide 5: Temporal Sync & Signal Reliability
+Solving the Latency & Jitter Problem
+The Threat: If the edge CPU throttles, frame queues grow, and timestamps become misaligned. Dropping frames at 60Hz destroys the time-synchronization required to map gaze vectors.
+Monotonic Timestamping (Mechanism F3-A): Immediate hardware time-stamping via CLOCK_MONOTONIC to ensure immunity from OS NTP jumps. Every frame receives a nanosecond-precision tag at the kernel dequeue boundary.
+UVC Payload Research (Mechanism F3-B): Investigating the scene camera's /dev/video3 metadata node to extract native hardware Source Clock Reference (SCR) and Presentation Time Stamps (PTS), representing a novel academic dimension to our implementation.
+Slide 6: Summary of Expected Deliverables
+Component 2 Outcomes
+Working Pipeline: Flawless dual-camera capture over prolonged periods (>30 min sessions bridging to 5 hours).
+Documented Formats: Reliable JSONL metadata and fault-tolerant MJPEG AVI containers.
+Latency Analysis: Formal quantification of software timestamp jitter and inter-stream drift.
+Research Contribution: Evaluating 30Hz vs 60Hz detection metrics, proving whether high-performance sampling reliably impacts accuracy over long durations without causing processor failure.
