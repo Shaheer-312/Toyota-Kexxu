@@ -1,0 +1,71 @@
+source .venv/bin/activate
+
+
+lsusb
+
+Identify the Device Node
+v4l2-ctl --list-devices
+
+Extract Video Specs (Resolutions & Frame Rates)
+v4l2-ctl -d /dev/video0 --list-formats-ext
+
+Extract "Everything" via V4L2
+v4l2-ctl -d /dev/video0 --all
+
+Available hardware controls (Brightness, Contrast, Focus, Exposure ranges)
+v4l2-ctl -d /dev/video0 --list-ctrls
+
+Extract Hardware & Descriptor Details
+Find your camera's ID: lsusb (e.g., 1234:abcd).
+sudo lsusb -v -d 1234:abcd
+
+Query System & Kernel Attributes
+If you need the specific serial number or UUID for a udev rule or script
+udevadm info --query=all --name=/dev/video0
+
+
+
+
+
+sudo nano /etc/udev/rules.d/99-kexxu-cameras.rules
+
+# Eye Camera (Microdia/Sonix) - Only the Capture Node
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="6366", ATTRS{serial}=="SN0001", ATTR{index}=="0", SYMLINK+="eye"
+
+# Front Camera (Realtek) - Only the Capture Node
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="5842", ATTRS{serial}=="200901010001", ATTR{index}=="0", SYMLINK+="front"
+
+Save and exit (Ctrl+O, Enter, Ctrl+X).
+
+Unplug both cameras.
+
+Run: sudo udevadm control --reload-rules && sudo udevadm trigger
+
+Plug them back in.
+
+
+
+SSD Connections
+
+On Ubuntu, your external SSD is usually mounted automatically under /media/. To find the exact path, plug in your SSD and run:
+lsblk
+
+Instead of saving to your laptop's internal drive and moving it later, you tell your script to write to the SSD path immediately.
+
+
+    Camera: 500mA 
+
+    Front Camera: 500mA 
+
+    External SSD: 500mA - 900mA (standard for portable SSDs).
+
+The Problem: If you plug both cameras and the SSD into the same side of your laptop or a cheap unpowered hub, you are asking for ~2.0 Amps of power. Most laptop USB ports are only rated for 0.9 Amps.
+
+The Result: The SSD will "brown out" and disconnect in the middle of your recording, or one of the cameras will freeze.
+
+
+The SOP Fix:
+
+    Use a Powered USB Hub (one that plugs into a wall outlet) to connect everything.
+
+    Alternatively, plug the SSD into one side of the laptop and the Cameras into the other side (different internal controllers).

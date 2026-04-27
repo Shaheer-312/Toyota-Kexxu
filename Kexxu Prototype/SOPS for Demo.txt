@@ -1,0 +1,7 @@
+Set in the rules in udev enviroment for converting /dev/video[n] streams to their respective names (to perma-separate them)
+We will be using our personal laptop for demo
+OpenCV python script/GStreamer may be used for synchronization
+External SSD is recommended for storing data there - initial prep would be required for this connection
+Make sure you ALWAYS point the finger to where the eye is looking at all means
+You may use extended USB cables to connect to the laptop for your ease
+
