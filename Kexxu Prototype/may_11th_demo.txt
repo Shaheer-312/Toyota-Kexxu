@@ -1,0 +1,14 @@
+what i am aware of:
+- I'd be making a synchornized pipeline for both cameras to start and end at the same time, wrt the data format defined in the document
+- I'd define the SOPs for the person constructing the demo, you can look into it and annotate it wrt your recommandations
+- Both cameras view will be able to be visualized while  the demo is being conducted
+- The metadata being stored alongside
+I'd want you to define exactly what you require in the metadata exactly
+
+
+I'd require an external SSD for the data to store in and a powered USB Hub (one that plugs into a wall outlet) to connect everything
+
+In order to decide the size of the SSD required I'd want 2 things:
+- How long will be the session of the demo
+- The required meta data
+By the size of metadata of a frame with the session time, i can estimate what shall be the size of SSD we'd require

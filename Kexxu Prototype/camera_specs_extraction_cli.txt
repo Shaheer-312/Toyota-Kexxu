@@ -44,28 +44,15 @@ Run: sudo udevadm control --reload-rules && sudo udevadm trigger
 Plug them back in.
 
 
-
-SSD Connections
-
-On Ubuntu, your external SSD is usually mounted automatically under /media/. To find the exact path, plug in your SSD and run:
-lsblk
-
-Instead of saving to your laptop's internal drive and moving it later, you tell your script to write to the SSD path immediately.
+Now we can use:
+v4l2-ctl -d /dev/front --list-formats-ext
+v4l2-ctl -d /dev/eye --list-formats-ext
 
 
-    Camera: 500mA 
-
-    Front Camera: 500mA 
-
-    External SSD: 500mA - 900mA (standard for portable SSDs).
-
-The Problem: If you plug both cameras and the SSD into the same side of your laptop or a cheap unpowered hub, you are asking for ~2.0 Amps of power. Most laptop USB ports are only rated for 0.9 Amps.
-
-The Result: The SSD will "brown out" and disconnect in the middle of your recording, or one of the cameras will freeze.
 
 
-The SOP Fix:
 
-    Use a Powered USB Hub (one that plugs into a wall outlet) to connect everything.
 
-    Alternatively, plug the SSD into one side of the laptop and the Cameras into the other side (different internal controllers).
+
+
+
