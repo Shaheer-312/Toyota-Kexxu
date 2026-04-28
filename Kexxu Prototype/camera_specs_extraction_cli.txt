@@ -49,6 +49,9 @@ v4l2-ctl -d /dev/front --list-formats-ext
 v4l2-ctl -d /dev/eye --list-formats-ext
 
 
+/dev/media1
+That is the Media Controller node. It’s used by the system to map the hardware topology (how the sensor connects to the processing unit). You don't need to worry about it for your ML project; OpenCV and FFmpeg only care about the /dev/videoX capture node.
+
 
 
 
