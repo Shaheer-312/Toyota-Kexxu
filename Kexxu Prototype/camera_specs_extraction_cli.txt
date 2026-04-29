@@ -21,7 +21,7 @@ sudo lsusb -v -d 1234:abcd
 
 Query System & Kernel Attributes
 If you need the specific serial number or UUID for a udev rule or script
-udevadm info --query=all --name=/dev/video0
+udevadm info --query=all --name=/dev/video0 	
 
 
 
@@ -54,7 +54,25 @@ That is the Media Controller node. It’s used by the system to map the hardware
 
 
 
+pip install v4l2py opencv-python
 
+
+
+v4l2-ctl -d /dev/eye --set-ctrl=auto_exposure=1 --set-ctrl=exposure_time_absolute=157
+v4l2-ctl -d /dev/front --set-ctrl=auto_exposure=1 --set-ctrl=exposure_time_absolute=166
+
+For the Eye Camera (157):
+    157×100μs=15.7ms.
+    Since your target is 60 fps, your frame interval is exactly 16.66ms.
+    Logic: By setting it to 15.7ms, you are leaving a small "safety buffer" (~1ms) for the ISP to package the data and send it over the USB bus without missing the next 16.6ms window .  
+
+For the Front Camera (166):
+    166×100μs=16.6ms.
+    Since your target is 30 fps, your frame interval is 33.33ms
+    Logic: This is a very fast shutter speed for 30 fps. It results in sharp, crisp "world-view" frames with almost zero motion blur, which is ideal for identifying distant objects or text in an industrial environment.
+    
+If your image is too dark after running these commands, do not increase the exposure time (as it will drop your FPS). Instead, increase the Gain (analog amplification):
+v4l2-ctl -d /dev/eye --set-ctrl=gain=50s
 
 
 
