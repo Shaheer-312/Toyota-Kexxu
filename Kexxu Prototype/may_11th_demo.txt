@@ -12,3 +12,47 @@ In order to decide the size of the SSD required I'd want 2 things:
 - How long will be the session of the demo
 - The required meta data
 By the size of metadata of a frame with the session time, i can estimate what shall be the size of SSD we'd require
+
+
+
+
+FINAL REQUIREMENTS:
+ensure  your udev rules (/dev/eye and /dev/front) are active.
+ls -l /dev/eye /dev/front
+uccess: You should see lines like this:
+    lrwxrwxrwx 1 root root 6 May  4 13:40 /dev/eye -> video0
+    lrwxrwxrwx 1 root root 6 May  4 13:40 /dev/front -> video2
+Failure: If it says ls: cannot access '/dev/eye': No such file or directory, the rules are not active.
+Force-activation:
+# 1. Reload the rules from the disk into memory
+sudo udevadm control --reload-rules
+
+# 2. Trigger the rules for all video devices
+sudo udevadm trigger --subsystem-match=video4linux
+
+
+
+v4l2-ctl -d /dev/eye --set-ctrl=auto_exposure=1 --set-ctrl=exposure_time_absolute=157
+v4l2-ctl -d /dev/front --set-ctrl=auto_exposure=1 --set-ctrl=exposure_time_absolute=166
+
+
+Outputs required:
+
+1)
+.mkv video files for each session following:
+Eye Camera: MJPG, 1280×800, 60 FPS
+Front Camera: MJPG, 1280×720, 30 FPS
+MJPEG format
+Both shall me recording synchronously
+
+2)
+MetaData
+1. eye_timestamps.csv — frame index + timestamp per eye frame
+2. front_timestamps.csv — frame index + timestamp per front frame
+3. Generic session_meta.csv - start time, end time of each eye and front camera csvs
+
+3)
+Each output shall be transferred to an external SSD in run-time
+
+
+un-supervised

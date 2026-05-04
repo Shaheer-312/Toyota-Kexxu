@@ -74,6 +74,10 @@ For the Front Camera (166):
 If your image is too dark after running these commands, do not increase the exposure time (as it will drop your FPS). Instead, increase the Gain (analog amplification):
 v4l2-ctl -d /dev/eye --set-ctrl=gain=50s
 
+sequence,timestamp_ns,frame_size
+1,1684523450123000,204858
+2,1684523466790000,210102
+3,1684523483457000,198055
 
 
 

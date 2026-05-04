@@ -5,3 +5,6 @@ External SSD is recommended for storing data there - initial prep would be requi
 Make sure you ALWAYS point the finger to where the eye is looking at all means
 You may use extended USB cables to connect to the laptop for your ease
 
+Because we are writing at run-time, never unplug the SSD while the script is running. This would cause the file handle to break, likely corrupting the video file and preventing the metadata from saving properly. Always stop the script (wait for the [SUCCESS] message) before disconnecting the drive.
+
+Enter session name before the beginning, just as you start the session
