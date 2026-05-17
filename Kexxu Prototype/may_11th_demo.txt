@@ -35,6 +35,12 @@ sudo udevadm trigger --subsystem-match=video4linux
 v4l2-ctl -d /dev/eye --set-ctrl=auto_exposure=1 --set-ctrl=exposure_time_absolute=157
 v4l2-ctl -d /dev/front --set-ctrl=auto_exposure=1 --set-ctrl=exposure_time_absolute=166
 
+Long-term Fix
+For the proper system (as documented in your architecture), you need IR LED illuminators mounted on the glasses frame pointing at the eye. These are typically:
+
+850nm wavelength — invisible to human eye, bright to camera
+Driven at ~20-50mA per LED, 2-4 LEDs per eye
+Controlled via GPIO from your embedded SoC
 
 Outputs required:
 
