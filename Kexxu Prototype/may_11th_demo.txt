@@ -62,3 +62,9 @@ Each output shall be transferred to an external SSD in run-time
 
 
 un-supervised
+
+
+
+gamma
+gain
+brightness
