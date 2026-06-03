@@ -98,10 +98,6 @@ def record_camera_worker(device_path, label, output_dir, width, height, fps, sta
 # ==========================================
 if __name__ == "__main__":
     
-    print("\n==========================================")
-    print("   COMPONENT 2: DATA CAPTURE PIPELINE")
-    print("==========================================")
-    
     session_name = input("\nEnter session name (e.g., Session_002_BenchTest): ").strip()
     
     if not session_name:

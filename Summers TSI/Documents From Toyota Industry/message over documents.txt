@@ -1,0 +1,9 @@
+Please find attached the relevant documents required for eye tracking glasses.
+
+Regarding your earlier concerns, please refer to the IIL process document that contains the list of points/parts to be checked for engine. Additionally, we’ve almost 150 inspections daily and any identified defect is recorded on the variant wise check sheets attached. At present, we do not have a dashboard visualisation for this data as after defect marking on the check sheets a summary is compiled at the end.
+
+Kindly review all these documents and incorporate these in the project accordingly.
+
+Let me know if any further information is required from my end.
+
+ 

@@ -1,0 +1,40 @@
+1. Main Codebase (The Pipeline)
+The core code driving the Kexxu frame and your data capture pipeline is located on the main OS partition (rootfs) in the pi user's home directory.
+
+Path: /run/media/sherry/rootfs/home/pi/openeye_raspberrypi_code/
+
+This folder contains multiple distinct modules that run in parallel:
+
+openeye_cmake/: This is your C++ codebase (managed via CMake). It contains the core, performance-heavy V4L2 multiprocessing logic for eye-tracking and camera handling that you were previously debugging. Look in the src/ and include/ folders for the C++ source files.
+go-server/: A Go-based backend server (main.go). This likely acts as the local API, handling network requests and possibly managing the transfer of processed data up to the cloud.
+kexxu-device/: A collection of Python scripts (kexxu_device.py, client_mqtt_kexxu_device.py, etc.). This module handles the hardware device operations, Wi-Fi networking (tools_wifi.py), and MQTT communication logic.
+recorder/: A Python recording utility (recorder.py). It works in tandem with ffmpeg to capture the scene camera feed and save it to disk.
+2. Captured Data (Video & Gaze Metadata)
+The actual captured data—which is staged locally before being transferred to the cloud for processing—is stored on a separate data partition.
+
+Path: /run/media/sherry/data/recordings/
+
+This directory contains multiple timestamped folders (e.g., 2024-05-31_02-04-04, 2024-06-12_13-03-08).
+Inside each folder, you will find:
+.mp4 files: The recorded video feed from the frame.
+.json files: The corresponding telemetry, gaze plots, or heat map metadata linked to the video feed. (Note: These files were written by the Pi's root user, so you may need to use sudo or change permissions to read/copy them out of the SD card to your local machine).
+3. System Configuration (How It Runs)
+To understand how the Raspberry Pi orchestrated these modules to run automatically on boot, you can extract the custom systemd service files.
+
+Path: /run/media/sherry/rootfs/etc/systemd/system/
+
+You'll find four relevant service configurations here:
+
+kexxu.service (Starts the Python device module)
+openeye.service (Starts the C++ camera pipeline)
+goserver.service (Starts the Go backend)
+recorder.service (Starts the video/metadata recording script)
+Next Steps & Guidance:
+If your goal is to extract the code and data to your PC:
+
+Copy the Code: Simply copy the entire /run/media/sherry/rootfs/home/pi/openeye_raspberrypi_code/ directory to your local /home/sherry/ workspace.
+Copy the Data: Use the terminal with root privileges (e.g., sudo cp -r /run/media/sherry/data/recordings ~/Documents/kexxu-data) to copy out the videos and JSON metadata if you hit permission denied errors.
+Let me know if you want me to deep-dive into any specific file, read the source code for a particular module, or run the commands to copy these out for you safely!
+
+1:01 PM
+
