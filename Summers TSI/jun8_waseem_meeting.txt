@@ -1,0 +1,9 @@
+TO DISCUSS:
+1) available prototype case's codeflow
+    understanding the working and output 
+2) Current USB 3.0/2.0 vs MIPI CSI 2
+3) data transferring mechanism
+4) variable controls / ir illuminators?
+
+
+

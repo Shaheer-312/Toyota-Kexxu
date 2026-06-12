@@ -36,5 +36,3 @@ Copy the Code: Simply copy the entire /run/media/sherry/rootfs/home/pi/openeye_r
 Copy the Data: Use the terminal with root privileges (e.g., sudo cp -r /run/media/sherry/data/recordings ~/Documents/kexxu-data) to copy out the videos and JSON metadata if you hit permission denied errors.
 Let me know if you want me to deep-dive into any specific file, read the source code for a particular module, or run the commands to copy these out for you safely!
 
-1:01 PM
-

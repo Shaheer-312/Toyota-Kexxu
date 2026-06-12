@@ -23,7 +23,7 @@ Camera Controls
      exposure_dynamic_framerate 0x009a0903 (bool)   : default=0 value=1
 
 
-
+	
 In order to set:
 
 Split it into separate commands:
