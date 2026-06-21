@@ -1,0 +1,17 @@
+[Unit]
+Description=Autonomous AI Analyst Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+ExecStartPre=/bin/bash -c "pip3 install google-generativeai || true"
+ExecStart=/usr/bin/python3 /home/pi/pi_autonomous_analyst.py
+Restart=on-failure
+RestartSec=30
+StandardOutput=append:/home/pi/ai_analyst_service.log
+StandardError=append:/home/pi/ai_analyst_service.log
+
+[Install]
+WantedBy=multi-user.target
